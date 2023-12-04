@@ -39,3 +39,4 @@ UmiOCR-data/plugins/*/
 # 排除缓存
 **__pycache__**
 UmiOCR-data/i18n/_
+/.idea

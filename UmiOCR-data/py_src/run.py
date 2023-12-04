@@ -2,6 +2,7 @@ import os
 import sys
 import site
 import version as V
+
 from .utils import pre_configs
 from .server.cmd_client import initCmd
 
@@ -12,7 +13,7 @@ def runQml():
     try:
         from PySide2.QtCore import QCoreApplication
 
-        QCoreApplication.addLibraryPath("./site-packages/PySide2/plugins")
+        # QCoreApplication.addLibraryPath("./site-packages/PySide2/plugins")
     except Exception as e:
         print(e)
         msg = f"Qt plugins 目录导入失败！\nQt plugins directory import failed!\n\n{str(e)}"
@@ -22,6 +23,7 @@ def runQml():
     from PySide2.QtCore import Qt, QTranslator
     from PySide2.QtGui import QGuiApplication, QOpenGLContext
     from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
+    from PySide2.QtWidgets import QApplication
 
     from .tag_pages.tag_pages_connector import TagPageConnector  # 页面连接器
     from .mission.mission_connector import MissionConnector  # 任务连接器
@@ -45,7 +47,7 @@ def runQml():
     app_opengl.initOpengl()
 
     # 2. 启动qt
-    qtApp = QGuiApplication(sys.argv)
+    qtApp = QApplication(sys.argv)
     qtApp.setApplicationName(f"Umi-OCR")
     qtApp.setOrganizationName("hiroi-sora")
     qtApp.setOrganizationDomain(V.WEBSITE)
@@ -72,7 +74,7 @@ def runQml():
 
     # 6. 启动qml引擎
     engine = QQmlApplicationEngine()
-    engine.addImportPath("./site-packages/PySide2/qml")  # 相对路径重新导入包
+    # engine.addImportPath("./site-packages/PySide2/qml")  # 相对路径重新导入包
     engine.addImageProvider("pixmapprovider", PixmapProvider)  # 注册图片提供器
     rootContext = engine.rootContext()  # 注册常量
     rootContext.setContextProperty("APP_VERSION", os.environ["APP_VERSION"])
